@@ -1,0 +1,138 @@
+{% from 'macro_for_register.html' import render_field %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="https://kit.fontawesome.com/ac708d8e00.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{{url_for('static', filename = 'style.css')}}">
+    <title>Register</title>
+    <style> 
+    body{ background-image: url({{url_for('static',filename = 'images/register-bg.gif')}});
+    }
+    </style>
+</head>
+<html>
+<body>
+  <div class="container" >
+    <div class="row" style="width: 400px;position: absolute; left: 35%;top: 40px;">
+      {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      <ul class=flashes style="color: green; background-color: yellow; text-align: center;">
+      {% for message in messages %}
+        <li>{{ message }}</li>
+      {% endfor %}
+      </ul>
+    {% endif %}
+    {% endwith %}
+      <div class="panel-heading">
+               <div class="panel-title text-center">
+                 </div>
+            </div> 
+      <div class="main-login main-center">
+        <div>
+          
+        </div>
+        <form class="form-horizontal" method="POST" action="">
+          <h4>Sign Up with Email</h4>
+          <span style="font-size: 12px;">Sign Up with <a href="">Google</a> or <a href="">GitHub</a> instead</span>
+
+          {{ form.hidden_tag() }}
+          <div class="form-group">
+            <label for="name" class="cols-sm-2 control-label">Full Name</label>
+            <div class="cols-sm-10">
+              <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                {{ render_field(form.username, class='form-control', placeholder="Enter your Name") }}
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="email" class="cols-sm-2 control-label">Your Email</label>
+            <div class="cols-sm-10">
+              <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
+                {{ render_field(form.email, class='form-control', placeholder="Enter your Email")}}
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="password" class="cols-sm-2 control-label">Password</label>
+            <div class="cols-sm-10">
+              <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+                {{ render_field(form.password, class='form-control', placeholder="Enter your Password" )}}
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group ">
+            {{ form.submit(class_="btn btn-success btn-lg btn-block login-button") }}
+          </div>
+          <p style="font-size: 9px;">By signing you agree to the <a>of Service</a> and <a>Privecy Policy</a></p>
+               </div>
+        </form>
+      </div>
+    </div>
+  </div>
+<!--
+=======
+
+    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+
+    <title>Document</title>
+</head>
+<body>
+    <form class="form-horizontal" action='' method="POST">
+  <fieldset>
+    <div id="legend">
+      <legend class="">Register</legend>
+    </div>
+    <div class="control-group">
+       Username 
+      <label class="control-label"  for="username">Username</label>
+      <div class="controls">
+        <input type="text" id="username" name="username" placeholder="" class="input-xlarge">
+        <p class="help-block">Username can contain any letters or numbers, without spaces</p>
+      </div>
+    </div>
+ 
+    <div class="control-group">
+      E-mail 
+      <label class="control-label" for="email">E-mail</label>
+      <div class="controls">
+        <input type="text" id="email" name="email" placeholder="" class="input-xlarge">
+        <p class="help-block">Please provide your E-mail</p>
+      </div>
+    </div>
+ 
+    <div class="control-group">
+       Password
+      <label class="control-label" for="password">Password</label>
+      <div class="controls">
+        <input type="password" id="password" name="password" placeholder="" class="input-xlarge">
+        <p class="help-block">Password should be at least 4 characters</p>
+      </div>
+    </div>
+ 
+    <div class="control-group">
+       
+      <div class="controls">
+        <button class="btn btn-success">Register</button>
+      </div>
+    </div>
+  </fieldset>
+</form> 
+
+-->
+</body>
+</html>

@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block title %} Ask Question {% endblock %}
+{% from 'macro.html' import render_field %}
+{% block content %}
+
+<div class="row" style="width: 800px;margin: 0 auto;">
+    <div class="col-12">
+        <h2 style="font-family: Segoe UI,Roboto,Helvetica Neue,Helvetica,Arial,sans-serif;
+        font-weight: 700;
+        color: #031b4e;">Ask the Community </h2>
+        <p>Running into trouble? Our developer community is here to helpt Ask anything related to system administration, programming, devops, open source, or the DigitalOcean platform.</p>
+        <br>
+        <form action="" class="form" role="form" method="POST">
+
+            {{ form.hidden_tag() }}
+              
+                 {{ render_field(form.Title, class='form-control', placeholder='How to Set Up Automatic Deployment with Git with a VPS') }}
+                 {{ render_field(form.Body, class='form-control', placeholder='Write your full question here...') }}
+                 {{ render_field(form.Tag, class='form-control', placeholder='Select tags for this question...') }}
+                 <br>
+            {{ form.Submit(class_="btn btn-outline-primary btn-block") }}
+              
+        </form>
+    </div>
+</div>
+{% endblock %}
+{% block js %}
+    <script src="https://cdn.tiny.cloud/1/lgfeziaxbazeuw63ihouu1n5kbd9p72t0spaeke17i36tqsn/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+    <script>
+        tinymce.init({selector:'textarea',
+                        setup: function (editor) {
+                                editor.on('change', function () {
+                                    tinymce.triggerSave();
+                                });
+                            }
+                        });
+    </script>
+{% endblock %}

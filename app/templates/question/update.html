@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block css %}
+	<link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap4.min.css">
+{% endblock %}
+{% block content %}
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+      <ul class=flashes style="color: green;width: 900px;margin: 0 auto; list-style-type: none;border-radius: 5px; background-color: lightblue; text-align: center;">
+      {% for message in messages %}
+        <li>{{ message }}</li>
+      {% endfor %}
+      </ul>
+    {% endif %}
+    {% endwith %}
+
+	<h2 class="text-center"> Question By {{User['FullName']}}</h2>
+	<table class="table mypost">
+
+		<thead>
+			<th>Question ID</th>
+			<th>Question Title</th>
+            <th>Tag And Topic</th>
+			<th>Created On</th>
+			<th>Actions</th>
+		</thead>
+		<tbody>
+		{% for question in questions %}
+			<tr >
+				<td ><a style="cursor: pointer;color: black;text-decoration: none;" href="/Question/View/{{question['ID']}}/{{ question['Tag'] }}">{{question['ID']}}</a></td>
+				<td ><a style="cursor: pointer;color: black;text-decoration: none;" href="/Question/View/{{question['ID']}}/{{ question['Tag'] }}">{{question['Title']|truncate}}</a></td>
+                <td ><a style="cursor: pointer;color: black;text-decoration: none;" href="/Question/View/{{question['ID']}}/{{ question['Tag'] }}">{{question['Tag']}}</a></td>
+				<td ><a style="cursor: pointer;color: black;text-decoration: none;" href="/Question/View/{{question['ID']}}/{{ question['Tag'] }}">{{question['Created']}}</a></td>
+				<td>
+					<a href="/Question/{{question['ID']}}/Edit">Edit</a>
+					<a href="/Question/{{question['ID']}}/Delete" class="text-danger">Delete</a>
+				</td>
+             </tr>
+        {% endfor %}
+
+
+   </tbody>
+
+  </table>
+ {% endblock %}
+
+ {% block js %}
+  <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap4.min.js"></script>
+  <script>
+   $(document).ready(function() {
+    $('table.mypost').DataTable()
+   });
+  </script>
+ {% endblock %}
+>>>>>>> 42896777f88a8983df9b2d0ac9530b0af7760db4

@@ -1,0 +1,299 @@
+{% extends 'base.html' %}
+{% block title %} View Question {% endblock %}
+{% from 'macro.html' import render_field %}
+{% block content %}
+
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+      <ul class=flashes style=" color: green; list-style: none; text-align: center;">
+      {% for message in messages %}
+        <li>{{ message }}</li>
+      {% endfor %}
+      </ul>
+    {% endif %}
+    {% endwith %}
+
+<div class="row" style="width: 900px;margin: 0 auto; ">
+                <div class="vote col-1">
+                    <br>
+                    <br>
+                    <a class="" href="" ><a href="/Question/View/{{questionID}}/{{questionTag}}/Vote"><i class="far fa-heart fa-3x"></i></a></a>
+                    <p style="text-align: center;">{{count_vote}}</p>
+                </div>
+                <div class="question col-9" style="width: 700px;">
+                    {% for question in questions %}
+                        <h5 style="color: rgb(18, 123, 228); font-size: 22px;">Question</h5>
+                        <p>
+                            <h1 style="font-family: Segoe UI,Roboto,Helvetica Neue,Helvetica,Arial,sans-serif;
+                                font-weight: 700;
+                                color: #031b4e;
+                                font-size: 44px;
+                                letter-spacing: -1px;
+                                line-height: 1.2;
+                                word-break: break-word;">{{ question['Title'] }}</h1>
+                        </p>
+                                    
+                        <p style="font-size: 12px;">
+            
+                            <span style="color:rgb(61, 61, 206) ;">Answers( {{count_ans}} ) : </span>
+                            <span> {{ question['Created'] }} </span>
+                            {% for tag in question['Tag'].split(",") %}
+                                <span style="background-color:lightblue; padding: 2px;">{{tag}}</span>
+                            {% endfor %}
+                        </p>
+                            <p >{{ question['Body']|safe}}</p>
+                            <br>
+                            <br>
+                            <br>
+                            <div class="nav">
+                                <div class="nav-link" onclick="comment()"><a href="#">Add a comment </a></div>
+                                <div class="nav-link"><a href="#"> Subscribe </a></div>
+                                <div class="nav-link"><a href="#"> Share </a></div>
+                                <div class="nav-link"><a href="#"> Report </a></div>
+                                <div class="nav-link"></div>
+                                <div class="nav-link"></div>
+                                <div class="navbar-text" style="float: right;"><p>By-{{ question['FullName'] }}</p></div>
+                                <hr>
+                            </div>
+                    {% endfor %}
+                </div>
+                <div class="related col-2">
+                    <h4>related</h4>
+                    <div style="border: 1px solid grey;margin:4px;">
+                        <center style="margin: 10px;">
+                            <div style="color: rgb(46, 107, 219);"><i class="fas fa-globe fa-3x"></i></div>
+                            <p>Instant DNS<br>
+                            LookUp Tool
+                            <a href="#">Tool</a></p>
+                        </center>
+                    </div>
+                    <div>
+                        {% for obj in Obj %}
+                            <a href="/Question/View/{{obj['ID']}}/{{ obj['Tag'] }}" style="color: black;text-decoration: none;">{{ obj['Title'] }}</a>
+                            <p style="color: rgb(15, 121, 226);"><i class="far fa-question-circle"></i> <b>Question</b></p>
+                            <hr>
+                        {% endfor %}
+                    </div>
+                </div>
+
+
+<div style="width: 650px; margin-left: 100px;">
+    <!-- Comment Question -->
+<div id= "row" style="width: 100%;display: none;">
+                    
+    <form action="/Question/View/{{questionID}}/{{questionTag}}/Comment" class="form" role="form" method="POST">
+            {{ render_field(form.Comment, class='form-control') }}
+    
+    <table>
+        <tr>
+            <td class="col-sm-3">
+                <span>logged in as:</span><br>
+                <span>{{user}}</span>
+            </td>
+            <td class="col-sm-8"></td>
+            <td class="col-sm-1">
+                {% if current_user.is_authenticated %}
+                <input type="submit" class="btn btn-primary" value="Comment">
+                {%else%}
+                <input type="submit" class="btn btn-primary" value="Comment" disabled>
+                {%endif%}
+            </td>
+            
+        </tr>
+    </table> 
+    </form>
+    <br>
+<hr>
+<br>        
+</div>
+</div>
+
+<div style="width: 650px; margin-left: 100px;">
+    <div>
+        <button type="button" class="btn btn-outline-primary btn-lg btn-block" onclick="answer()">Submit an Answer</button>
+    </div>
+    <br>
+    <hr>
+    
+<!--Answer question-->
+<div id= "row1"style="width: 100%;display:none">
+
+    <form action="/Question/View/{{questionID}}/{{questionTag}}/Answer" class="form" role="form" method="POST">
+
+        {{ form.hidden_tag() }} 
+            {{ render_field(form.Answer, class='form-control') }}
+    
+    <p style="color: steelblue;">You can type Iref in this text area to quickly search our fult set of tutorials, documentation & marketplace offerings and insert the link!</p>
+    <table style="width: 100%;">
+        <tr>
+            <td class="col-sm-3">
+                <span>logged in as:</span><br>
+                <span>{{user}}</span>
+            </td>
+            <td class="col-sm-9"></td>
+            <td class="col-sm-1">
+                {% if current_user.is_authenticated %}
+                <input type="submit" class="btn btn-primary" value="Answer">
+                {%else%}
+                <input type="submit" class="btn btn-primary" value="Answer" disabled>
+                {%endif%}
+            </td>
+        </tr>
+    </table>
+</form>
+<hr>
+</div>
+
+<h4>{{count_ans}} Answer(s)</h4>
+<div>
+    <hr>
+    <div id="" style="width: 550px; margin-left: 100px;">
+       <div>
+        {% for ans in answer %}
+        <span><a href="" style="margin-left: -50px;"><i class="far fa-heart fa-2x"></i></a></span>
+        <span>By-{{ ans['FullName'] }} - {{ ans['Created'] }},</span>
+        <div>
+            {% if User == UserQ %}
+                {% if ans['BestAnswer'] == ans['ID'] %}
+                <form action="/Question/View/{{questionID}}/{{questionTag}}/{{ans['ID']}}/BestAnswer" method="POST">
+                    <div class="form-check">
+                        <div class="nav">
+                            <div class="nav-link">
+                                <input class="form-check-input" type="checkbox" value="radio" id="flexCheckDefault" onchange="doalert(this)" name="checkBest" checked="checked">
+                        <label class="form-check-label" for="flexCheckDefault" style="color: #0066ff;">
+                        Best Answer
+                        </label>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                {% else %}
+
+                <form action="/Question/View/{{questionID}}/{{questionTag}}/{{ans['ID']}}/BestAnswer" method="POST">
+                    <div class="form-check">
+                        <div class="nav">
+                            <div class="nav-link">
+                                <input class="form-check-input" type="checkbox" value="radio" id="flexCheckDefault" onchange="doalert(this)" name="checkBest">
+                        <label class="form-check-label" for="flexCheckDefault" style="color: #0066ff;">
+                        Best Answer
+                        </label>
+                            </div>
+                            
+                            <div class="nav-link"> <input type="submit" value="submit"></div>
+                          
+                        </div>
+                    </div>
+                </form>
+
+                {%endif%}
+
+            {%else%}
+            {% if ans['BestAnswer'] == ans['ID'] %}
+                <form action="/Question/View/{{questionID}}/{{questionTag}}/{{ans['ID']}}/BestAnswer" method="POST">
+                    <div class="form-check">
+                        <div class="nav">
+                            <div class="nav-link">
+                                <input class="form-check-input" type="checkbox" value="radio" id="flexCheckDefault" onchange="doalert(this)" name="checkBest" checked="checked" disabled>
+                        <label class="form-check-label" for="flexCheckDefault" style="color: #0066ff;">
+                        Best Answer
+                        </label>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                {% else %}
+
+                <form action="/Question/View/{{questionID}}/{{questionTag}}/{{ans['ID']}}/BestAnswer" method="POST">
+                    <div class="form-check">
+                        <div class="nav">
+                            <div class="nav-link">
+                                <input class="form-check-input" type="checkbox" value="radio" id="flexCheckDefault" onchange="doalert(this)" name="checkBest" disabled>
+                        <label class="form-check-label" for="flexCheckDefault" style="color: #0066ff;">
+                        Best Answer
+                        </label>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            {%endif%}
+            {%endif%}
+        </div>
+        <p>{{ ans['Answer']|safe}}</p>
+        <span>  </span>
+        <div class="nav">
+            <div class="nav-link"><a href="#"> Reply </a></div>
+            <div class="nav-link"><a href="#"> Report </a></div>
+        </div>
+        <hr>
+        {%endfor%}
+       </div> 
+    </div>
+</div>
+<hr>
+<h4>{{count_com}} Comment(s)</h4>
+ <hr>
+<div id="" style="width: 550px; margin-left: 100px;">
+    {% for com in comment %}
+    <span>By-{{ com['FullName'] }} - {{ com['Created'] }},</span>
+    <p>{{ com['Comment']|safe}}</p>
+    <span>  </span>
+    <div class="nav">
+        <div class="nav-link"><a href="#"> Reply </a></div>
+        <div class="nav-link"><a href="#"> Report </a></div>
+    </div>
+    <hr>
+    {%endfor%}
+</div>
+</div>
+{% endblock %}
+{% block js %}
+    <script src="https://cdn.tiny.cloud/1/lgfeziaxbazeuw63ihouu1n5kbd9p72t0spaeke17i36tqsn/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+    <script>
+        tinymce.init({selector:'textarea',
+                        setup: function (editor) {
+                                editor.on('change', function () {
+                                    tinymce.triggerSave();
+                                });
+                            }
+                        });
+
+    function comment() {
+    var x = document.getElementById("row");
+    if (x.style.display === "none") {
+    x.style.display = "block";
+    } else {
+    x.style.display = "none";
+    }}
+    function answer() {
+    var x = document.getElementById("row1");
+    if (x.style.display === "none") {
+    x.style.display = "block";
+    } else {
+    x.style.display = "none";
+    }}
+    function viewComment() {
+    var x = document.getElementById("viewcomment");
+    if (x.style.display === "none") {
+    x.style.display = "block";
+    } else {
+    x.style.display = "none";
+    }}
+    function viewAnswer() {
+    var x = document.getElementById("viewanswer");
+    if (x.style.display === "none") {
+    x.style.display = "block";
+    } else {
+    x.style.display = "none";
+    }}
+
+    function doalert(checkboxElem) {
+    if (checkboxElem.checked) {
+    alert("checked")
+    } else {
+    alert("notchecked")
+    }
+    }
+    </script>
+
+    
+{% endblock %}

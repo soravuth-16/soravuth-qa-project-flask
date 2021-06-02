@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{url_for('static', filename='icon/css/fontawesome.css')}}">
+    <!--<link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">-->
+    <script src="https://kit.fontawesome.com/ac708d8e00.js" crossorigin="anonymous"></script>
+    <title>{% block title %} {% endblock %}</title>
+  </head>
+  <body>
+
+    <nav class="navbar navbar-expand-lg navbar fixed-top" style="background-color: white;">
+        <div class="collapse navbar-collapse" >
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active" style="border-right: 2px solid #0069FF;">
+                    <a class="nav-link" href="/">
+                        <ins>
+                            <b>QUESTIONS</b>
+                        </ins>
+                    </a>
+                </li>
+                {% if current_user.is_authenticated %}
+                {%else%}
+                <li class="nav-item">
+                    <a class="nav-link" href="/Register">
+                        <b>SIGN UP</b>
+                    </a>
+                </li>
+                {%endif%}
+            </ul>  
+            <ul class="navbar-nav">
+            {% if current_user.is_authenticated %}
+            <li class="nav-item ">
+                <a class="btn btn-primary my-2 my-sm-0" href="/Manager" style="margin-right: 5px;"><b>My Questions</b></a>
+            </li>
+            <li class="nav-item ">
+                <a class="btn btn-primary my-2 my-sm-0" href="/Logout" ><b>Logout</b></a>
+            </li>
+            {%else%}
+                <li class="nav-item ">
+                    <a class="btn btn-primary my-2 my-sm-0" href="/Login" ><b>Login</b></a>
+                </li>
+            {%endif%}
+            </ul>
+        </div> 
+     </nav>
+     <br>
+    <br>
+    <br>
+    {% block content %}
+            
+    {% endblock %}
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+    {% block js %}
+
+    {% endblock %}
+  </body>
+</html>

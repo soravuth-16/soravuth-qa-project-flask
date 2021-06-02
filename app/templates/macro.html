@@ -1,0 +1,12 @@
+{% macro render_field(field) %}
+  <dt style="font-family: Segoe UI,Roboto,Helvetica Neue,Helvetica,Arial,sans-serif;color: #031b4e;">{{ field.label }}
+  <dd>{{ field(**kwargs)|safe }}
+  {% if field.errors %}
+    <ul class=errors>
+    {% for error in field.errors %}
+      <li>{{ error }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+  </dd>
+{% endmacro %}

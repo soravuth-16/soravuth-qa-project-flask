@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+{% block title %} Welcome {% endblock %}
+{% block content %}
+
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+      <ul class=flashes style="color: green;width: 900px;margin: 0 auto; list-style-type: none;border-radius: 5px; background-color: lightblue; text-align: center;">
+      {% for message in messages %}
+        <li>{{ message }}</li>
+      {% endfor %}
+      </ul>
+    {% endif %}
+    {% endwith %}
+    
+    <center>
+        <div class="content"> 
+                <h2 class="content-title" style="font-family: Segoe UI,Roboto,Helvetica Neue,Helvetica,Arial,sans-serif;
+                font-weight: 700;
+                color: #031b4e;">Questions</h1>
+                <h5 style="font-family: Segoe UI,Roboto,Helvetica Neue,Helvetica,Arial,sans-serif;
+                font-weight: 700;
+                color: #031b4e;">
+                Ask a development question or answer others in our diverse Q&A section.</h5> 
+            </div>
+            <div style="width: 800px;">
+                <form action="{{url_for('index')}}" method="GET">
+                    <input class="form-control form-control-lg" type="search" name= 'Search' placeholder="Seach Questions">
+                </form>
+            </div>
+    
+        <div class="contect nav" style="width: 800px;margin: 0 auto;">
+            <div class="nav col-sm-9">
+                <div class="count-question nav-link ">
+                    <p class="btn ">{{count}} Questions</p>
+                </div>
+                <div class="ask-question nav-link ">
+                    <a class="btn btn-primary" href="/Question/New" role="button">Ask Questions</a>
+                </div>
+            </div>
+            <div class="all nav-link col-sm-3">
+                <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                
+                  <div class="btn-group" role="group">
+                    <button id="btnGroupDrop1" type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="margin: 0 auto;">
+                      All
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                        <a class="dropdown-item" href="/All">All</a>
+                        <a class="dropdown-item" href="/Answer">Answer</a>
+                        <a class="dropdown-item" href="/Unanswer">Unanswer</a>
+                    </div>
+                  </div>
+                  <div class="btn-group" role="group">
+                    <button id="btnGroupDrop1" type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="margin: 0 auto;">
+                      Most Recent
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                        <a class="dropdown-item" href="/MostRecent">Most Recent</a>
+                        <a class="dropdown-item" href="/Popular">Popular</a>
+                    </div>
+                  </div>
+            </div>
+                
+            </div>
+            
+        </div>
+<div class="list-question" style="width: 800px;margin: 0 auto;"></div>
+    </center>
+    <div class="question" style="width: 800px;margin: 0 auto;">
+        {% for question in questions %}
+	     <a class="nav-item" href="/Question/View/{{question['ID']}}/{{ question['Tag'] }}">
+	         <h2 style="font-family: Segoe UI,Roboto,Helvetica Neue,Helvetica,Arial,sans-serif;
+             font-weight: 700;
+             color: #031b4e;">{{ question['Title'] }}</h2>
+		 </a>
+	     <p >{{ (question['Body']|safe)}}</p>
+	     <p style="font-size: 12px;">
+         <span> {{ question['Created'] }} </span>
+	     <span >  By - {{ question['FullName'] }} </span >
+             {% for tag in question['Tag'].split(",") %}
+                <span style="background-color:lightblue; padding: 2px;">{{tag}}</span>
+
+                {% endfor %}
+            </p>
+	     <hr>
+	 {% endfor %}
+    </div>
+    <div class=" related_post">
+        <div class="related">
+            
+        </div>
+    </div>
+    
+{% endblock %}
+
+<!--hello-->

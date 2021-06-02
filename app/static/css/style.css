@@ -1,0 +1,46 @@
+
+.content h1.content-title {
+	font-family: Segoe UI,Roboto,Helvetica Neue,Helvetica,Arial,sans-serif;
+	font-weight: 700;
+	color: #031b4e;
+	font-size: 44px;
+	letter-spacing: -1px;
+	line-height: 1.2;
+	word-break: break-word;
+}
+
+.tab {
+	overflow: hidden;
+	
+}
+/* Style the buttons inside the tab */
+
+.tab button {
+	background-color: inherit;
+	float: left;
+	border: none;
+	outline: none;
+	cursor: pointer;
+	padding: 14px 16px;
+	transition: 0.3s;
+	font-size: 17px;
+	
+}
+/* Change background color of buttons on hover */
+
+.tab button:hover {
+	color: darkblue;
+}
+/* Create an active/current tablink class */
+
+.tab button.active {
+	background-color: #ccc;
+}
+/* Style the tab content */
+
+.tabcontent {
+	display: none;
+	padding: 6px 12px;
+	border: 1px solid #ccc;
+	border-top: none;
+}
