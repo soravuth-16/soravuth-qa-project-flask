@@ -14,7 +14,7 @@ DB_PWD = '12345'# database password
 DB_NAME = 'qadb'
 #hello
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=False
-app.config['SQLALCHEMY_DATABASE_URI'] = "postgres://aqhzyeqnjlalzs:c9755c0f98443b0e8903d03f62713089afd3f4388192afcc63171db0f84edf33@ec2-34-206-8-52.compute-1.amazonaws.com:5432/d50ljt27gacvee"
+app.config['SQLALCHEMY_DATABASE_URI'] = "postgres://xwmloiowwgoahp:7878092489a2bebef7b6e21dafeb0185fcf8f6ecbf8a8cb5e4093a070f7515ee@ec2-54-145-224-156.compute-1.amazonaws.com:5432/ddl5s5r8bddcbj"
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environt.get('DATABASE_URL').replace("://","ql://",1)
 
 login_manager = LoginManager()
